@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Age Calculator</title>
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            background-color: black;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box {
+            width: 700px;
+            height: 400px;
+        }
+
+        .cont {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            border: 2px solid #0ff;
+            border-radius: 8px;
+            text-shadow: 0 0 8px #0ff;
+            box-shadow: 0 0 8px #0ff, 0 0 16px #0ff;
+        }
+
+        .text {
+            color: #0ff;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 0 0 8px #0ff, 0 0 20px #0ff;
+            margin: 10px 0;
+        }
+
+        .text2 {
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 0 0 8px rgb(38, 103, 103), 0 0 20px rgb(16, 75, 75);
+            margin: 10px 0;
+        }
+
+        button,
+        input {
+            padding: 6px 14px;
+            border: 2px solid #0ff;
+            border-radius: 8px;
+            text-shadow: 0 0 8px #0ff;
+            box-shadow: 0 0 8px #0ff, 0 0 16px #0ff;
+            background-color: rgb(10, 40, 40);
+            margin: 10px 0;
+            color: #0ff;
+        }
+
+        input {
+            background-color: rgb(8, 64, 64);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="cont text">
+            <p style="font-size: 40px;">Age Calculator</p>
+            <p>Enter your date of birth:</p>
+            <input class="text input" type="date" id="dob">
+            <button class="text button calculate_btn" id="calculate_btn">Calculate Age</button>
+            <p class="text2 result" id="result">Your age is: </p>
+        </div>
+    </div>
+
+    <script>
+        const input = document.querySelector("#dob");
+        const button = document.querySelector("#calculate_btn");
+        const result = document.querySelector("#result");
+
+        button.addEventListener("click", () => {
+            if (input.value === "") {
+                alert("Please enter date of birth.");
+                return;
+            }
+
+            const dob = new Date(input.value);
+            const today = new Date();
+
+            if (dob > today) {
+                result.innerText = "Date of birth cannot be in the future!";
+                return;
+            }
+
+            let years = today.getFullYear() - dob.getFullYear();
+            let months = today.getMonth() - dob.getMonth();
+            let days = today.getDate() - dob.getDate();
+
+            if (days < 0) {
+                months--;
+                const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+                days += prevMonth.getDate();
+            }
+
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            result.innerText = `Your result is: ${years} year(s), ${months} month(s), ${days} day(s).`;
+        });
+    </script>
+</body>
+</html>
